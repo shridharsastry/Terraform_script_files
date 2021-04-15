@@ -1,9 +1,15 @@
+#First command to run terraform apply -target module.vpc.aws_vpc.main
+#Second command to run terraform apply -target module.vpc.aws_subnet.private_subnet
+#Third command to run terraform apply -target module.vpc.aws_subnet.public_subnet
+#Final command to run terraform apply
+
+
 provider "aws" {
   region = var.region
 }
 
 module "vpc" {
-  source = "C:\\Users\\shrid\\Desktop\\GIT\\test\\Terraform_script_files\\aws\\ThreeTierApplication\\modules\\vpc"
+  source = "C:\\Users\\shrid\\Desktop\\GIT\\Terraform_script_files\\aws\\ThreeTierApplication\\modules\\vpc"
   cidr_block       = "10.1.0.0/16"
   instance_tenancy = "default"
   vpc_tags = var.vpc_tags
@@ -20,7 +26,7 @@ module "vpc" {
 
 
 module "asg" {
-  source = "C:\\Users\\shrid\\Desktop\\GIT\\test\\Terraform_script_files\\aws\\ThreeTierApplication\\modules\\asg"
+  source = "C:\\Users\\shrid\\Desktop\\GIT\\Terraform_script_files\\aws\\ThreeTierApplication\\modules\\asg"
   instance_type = var.instance_type
   desired_capacity = var.desired_capacity
   max_size = var.max_size
@@ -31,7 +37,7 @@ module "asg" {
 }
 
 module "elb" {
-  source = "C:\\Users\\shrid\\Desktop\\GIT\\test\\Terraform_script_files\\aws\\ThreeTierApplication\\modules\\elb"
+  source = "C:\\Users\\shrid\\Desktop\\GIT\\Terraform_script_files\\aws\\ThreeTierApplication\\modules\\elb"
   public_subnets = module.vpc.public_subnet_info.ids
   private_subnets = module.vpc.private_subnet_info.ids
   private-asg-id = module.asg.private_asg_id.id
