@@ -1,19 +1,19 @@
 variable "public_subnets" {
-    type = any
+  type = any
 
 }
 
 variable "private_subnets" {
-    type = any
+  type = any
 
 }
 
 variable "private-asg-id" {
-    type = any
+  type = any
 
 }
 
 variable "public-asg-id" {
-    type = any
+  type = any
 
 }

@@ -9,5 +9,5 @@ module "sridhar-instance" {
 
 output "public_ip" {
   value = module.sridhar-instance[*].public_ip
-  }
+}
 

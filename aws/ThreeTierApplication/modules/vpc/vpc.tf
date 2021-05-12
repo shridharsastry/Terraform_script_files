@@ -1,7 +1,7 @@
 resource "aws_vpc" "main" {
   cidr_block       = var.cidr_block
   instance_tenancy = var.instance_tenancy
-  tags = var.vpc_tags
+  tags             = var.vpc_tags
 }
 
 resource "aws_network_acl" "main-nacl" {
@@ -44,26 +44,26 @@ resource "aws_network_acl" "main-nacl" {
 }
 
 resource "aws_subnet" "private_subnet" {
-  count = length(data.aws_availability_zones.available.names)
-  vpc_id = aws_vpc.main.id
-  cidr_block = "10.1.${10+count.index}.0/24"
-  availability_zone = data.aws_availability_zones.available.names[count.index]
+  count                   = length(data.aws_availability_zones.available.names)
+  vpc_id                  = aws_vpc.main.id
+  cidr_block              = "10.1.${10 + count.index}.0/24"
+  availability_zone       = data.aws_availability_zones.available.names[count.index]
   map_public_ip_on_launch = (var.map_public_ip_on_launch == false ? false : true)
   tags = {
-    Name = format("%s-%s","PrivateSubnet",count.index)
+    Name = format("%s-%s", "PrivateSubnet", count.index)
     Tier = "Private"
   }
 
 }
 
 resource "aws_subnet" "public_subnet" {
-  count = length(data.aws_availability_zones.available.names)
-  vpc_id = aws_vpc.main.id
-  cidr_block = "10.1.${20+count.index}.0/24"
-  availability_zone = data.aws_availability_zones.available.names[count.index]
+  count                   = length(data.aws_availability_zones.available.names)
+  vpc_id                  = aws_vpc.main.id
+  cidr_block              = "10.1.${20 + count.index}.0/24"
+  availability_zone       = data.aws_availability_zones.available.names[count.index]
   map_public_ip_on_launch = (var.map_public_ip_on_launch == false ? true : false)
   tags = {
-    Name = format("%s-%s","PublicSubnet",count.index)
+    Name = format("%s-%s", "PublicSubnet", count.index)
     Tier = "Public"
   }
 
@@ -71,17 +71,17 @@ resource "aws_subnet" "public_subnet" {
 
 resource "aws_internet_gateway" "main-igw" {
   vpc_id = aws_vpc.main.id
-  tags = var.igw_tags
+  tags   = var.igw_tags
 }
 
 resource "aws_eip" "ngw-eip" {
-  vpc = true
+  vpc        = true
   depends_on = [aws_internet_gateway.main-igw]
 }
 
 resource "aws_nat_gateway" "main-ngw" {
   allocation_id = aws_eip.ngw-eip.id
-  subnet_id     = tolist (data.aws_subnet_ids.subnet_ids.ids)[0]
+  subnet_id     = tolist(data.aws_subnet_ids.subnet_ids.ids)[0]
 }
 
 resource "aws_route_table" "public-rt" {
@@ -113,8 +113,8 @@ resource "aws_route_table" "private-rt" {
 
 resource "aws_route_table_association" "public" {
   depends_on = [aws_subnet.public_subnet]
-  count = length(tolist(data.aws_subnet_ids.public-subnet_ids.ids))
-  subnet_id = tolist(data.aws_subnet_ids.public-subnet_ids.ids)[count.index]
+  count      = length(tolist(data.aws_subnet_ids.public-subnet_ids.ids))
+  subnet_id  = tolist(data.aws_subnet_ids.public-subnet_ids.ids)[count.index]
   #element(aws_subnet.public_subnet.*.id, count_index)
   route_table_id = aws_route_table.public-rt.id
 
@@ -123,8 +123,8 @@ resource "aws_route_table_association" "public" {
 
 resource "aws_route_table_association" "private" {
   depends_on = [aws_subnet.private_subnet]
-  count = length(tolist(data.aws_subnet_ids.private-subnet_ids.ids))
-  subnet_id = tolist(data.aws_subnet_ids.private-subnet_ids.ids)[count.index]
+  count      = length(tolist(data.aws_subnet_ids.private-subnet_ids.ids))
+  subnet_id  = tolist(data.aws_subnet_ids.private-subnet_ids.ids)[count.index]
   #element(aws_subnet.public_subnet.*.id, count_index)
   route_table_id = aws_route_table.private-rt.id
 

@@ -11,7 +11,7 @@ provider "aws" {
 }
 
 data "aws_ami" "centos" {
-  owners = ["amazon"]
+  owners      = ["amazon"]
   most_recent = true
   filter {
     name   = "root-device-type"
@@ -23,23 +23,23 @@ data "aws_ami" "centos" {
     values = ["hvm"]
   }
   filter {
-   name   = "name"
-   values = ["Ubuntu*"]
- }
+    name   = "name"
+    values = ["Ubuntu*"]
+  }
 }
 
 resource "aws_instance" "example" {
-  ami = data.aws_ami.centos.id
+  ami           = data.aws_ami.centos.id
   instance_type = "t2.micro"
-  user_data = <<-EOF
+  user_data     = <<-EOF
               #!/bin/bash
               echo "I love you Pandu!" > index.html
               nohup busybox httpd -f -p var.server_port &
               EOF
-  
+
   tags = {
     Name = "terraform-example"
   }
-  
+
 
 }

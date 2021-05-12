@@ -3,7 +3,7 @@ resource "aws_lb" "public-elb-asg" {
   internal           = false
   load_balancer_type = "application"
   #security_groups    = [aws_security_group.lb_sg.id]
-  subnets            = var.public_subnets
+  subnets = var.public_subnets
 
   enable_deletion_protection = false
 
@@ -17,7 +17,7 @@ resource "aws_lb" "private-elb-asg" {
   internal           = true
   load_balancer_type = "network"
   #security_groups    = [aws_security_group.lb_sg.id]
-  subnets            = var.private_subnets
+  subnets = var.private_subnets
 
   enable_deletion_protection = false
 
