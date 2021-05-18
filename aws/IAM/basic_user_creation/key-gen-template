@@ -1,0 +1,7 @@
+Key-Type: default
+Subkey-Type: default
+Name-Real: sshastry
+Name-Comment: How to Use PGP to Encrypt Your Terraform Secrets
+Name-Email: shridharsastry@gmail.com
+Expire-Date: 0
+# Passphrase: ABC
