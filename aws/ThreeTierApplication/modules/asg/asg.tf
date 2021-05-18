@@ -7,12 +7,12 @@ resource "aws_launch_template" "asg-launch-template" {
 
 resource "aws_autoscaling_group" "public-asg" {
   vpc_zone_identifier = var.vpc_public_zone_identifier
-  desired_capacity   = var.desired_capacity
-  max_size           = var.max_size
-  min_size           = var.min_size
+  desired_capacity    = var.desired_capacity
+  max_size            = var.max_size
+  min_size            = var.min_size
   tag {
-    key = "key"
-    value = "public-asg"
+    key                 = "key"
+    value               = "public-asg"
     propagate_at_launch = true
   }
 
@@ -25,12 +25,12 @@ resource "aws_autoscaling_group" "public-asg" {
 
 resource "aws_autoscaling_group" "private-asg" {
   vpc_zone_identifier = var.vpc_private_zone_identifier
-  desired_capacity   = var.desired_capacity
-  max_size           = var.max_size
-  min_size           = var.min_size
+  desired_capacity    = var.desired_capacity
+  max_size            = var.max_size
+  min_size            = var.min_size
   tag {
-    key = "key"
-    value = "private-asg"
+    key                 = "key"
+    value               = "private-asg"
     propagate_at_launch = true
   }
 
@@ -38,5 +38,5 @@ resource "aws_autoscaling_group" "private-asg" {
     id      = aws_launch_template.asg-launch-template.id
     version = "$Latest"
   }
-  
+
 }

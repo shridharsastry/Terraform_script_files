@@ -1,37 +1,37 @@
 variable "cidr_block" {
-    type = string
+  type = string
 }
 
 variable "instance_tenancy" {
-    type = string
+  type = string
 }
 
 variable "vpc_tags" {
-    type = map
+  type = map(any)
 }
 
 variable "map_public_ip_on_launch" {
-    type = bool
+  type = bool
 }
 
 variable "nacl-egress-protocol" {
-    type = string
+  type = string
 }
 
 variable "nacl-ingress-protocol" {
-    type = string
+  type = string
 }
 
 variable "nacl-action" {
-    type = string
+  type = string
 }
 
-variable "nacl_rules"{
-    type = list
+variable "nacl_rules" {
+  type = list(any)
 }
 
 variable "igw_tags" {
-    type = map
+  type = map(any)
 }
 
 /*

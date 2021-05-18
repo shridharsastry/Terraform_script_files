@@ -17,15 +17,15 @@ data "aws_subnet_ids" "subnet_ids" {
 data "aws_subnet_ids" "public-subnet_ids" {
   vpc_id = module.vpc.vpc_id
   filter {
-     name = "tag:Tier"
-     values = ["Public"]
+    name   = "tag:Tier"
+    values = ["Public"]
   }
 }
 
 data "aws_subnet_ids" "private-subnet_ids" {
   vpc_id = module.vpc.vpc_id
   filter {
-     name = "tag:Tier"
-     values = ["Private"]
+    name   = "tag:Tier"
+    values = ["Private"]
   }
 }

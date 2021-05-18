@@ -1,30 +1,30 @@
 
 data "aws_ami" "ubuntu" {
-    most_recent = true
+  most_recent = true
 
-    filter {
-        name   = "name"
-        values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
-    }
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
+  }
 
-    filter {
-        name   = "virtualization-type"
-        values = ["hvm"]
-    }
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
 
-    owners = ["099720109477"] # Canonical
+  owners = ["099720109477"] # Canonical
 }
 
 data "aws_autoscaling_groups" "public-asg" {
-    filter {
-        name = "key"
-        values = ["public-asg"]
-    }
+  filter {
+    name   = "key"
+    values = ["public-asg"]
+  }
 }
 
 data "aws_autoscaling_groups" "private-asg" {
-    filter {
-        name = "key"
-        values = ["private-asg"]
-    }
+  filter {
+    name   = "key"
+    values = ["private-asg"]
+  }
 }

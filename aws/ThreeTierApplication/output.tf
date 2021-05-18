@@ -18,9 +18,9 @@ output "private_subnet_ids" {
 */
 
 output "public_asg_id" {
-    value = module.asg.public_asg_id
+  value = module.asg.public_asg_id
 }
 
 output "private_asg_id" {
-    value = module.asg.private_asg_id
+  value = module.asg.private_asg_id
 }

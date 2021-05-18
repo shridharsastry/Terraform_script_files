@@ -118,17 +118,17 @@ resource "aws_security_group" "allow_web" {
 #  9. Create Ubuntu server and install/enable apache2
 
 resource "aws_instance" "web-server-instance" {
-  depends_on        = [
+  depends_on = [
     aws_subnet.prod-subnet1,
     aws_subnet.prod-subnet2,
   ]
-  count             = var.instances_per_subnet * length(data.aws_subnet_ids.example.ids)
-  ami               = "ami-085925f297f89fce1"
-  instance_type     = "t2.micro"
+  count         = var.instances_per_subnet * length(data.aws_subnet_ids.example.ids)
+  ami           = "ami-085925f297f89fce1"
+  instance_type = "t2.micro"
   #availability_zone = "us-east-1a"
-  key_name          = "shridharsastry-icloud-us-east-1"
-  subnet_id         = sort (data.aws_subnet_ids.example.ids)[count.index % length(data.aws_subnet_ids.example.ids)]
- 
+  key_name  = "shridharsastry-icloud-us-east-1"
+  subnet_id = sort(data.aws_subnet_ids.example.ids)[count.index % length(data.aws_subnet_ids.example.ids)]
+
 
   vpc_security_group_ids = [
     aws_security_group.allow_web.id
@@ -141,9 +141,9 @@ resource "aws_instance" "web-server-instance" {
                  sudo systemctl start apache2
                  echo 'hi pandu!' > /var/www/html/index.html
                  EOF
-  
+
   tags = {
-    Name = format("%s-%s",var.vm_names,count.index+1)
+    Name = format("%s-%s", var.vm_names, count.index + 1)
   }
 
 }
